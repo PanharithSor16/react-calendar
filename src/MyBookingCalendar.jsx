@@ -18,16 +18,7 @@ export const MyBookingCalendar = () => {
   const [visible, setVisible] = useState(false);
   const [selectedTime, setSelectedTime] = useState(new Date());
   
-  const customEventComponent = ({ bookings }) => {
-    return (
-      <div>
-        <span>{bookings.title}</span> {/* Display event title */}
-        {/* <span style={{ marginLeft: 10 }}>{event.start.toLocaleTimeString()}</span> Display event start time */}
-        {/* <span style={{ marginLeft: 10 }}>{event.end.toLocaleTimeString()}</span> Display event end time */}
-        {/* Add more custom elements as needed */}
-      </div>
-    );
-  };
+  
   const [bookings, setBookings] = useState([{
     start: new Date(),
     end: new Date(),
@@ -64,6 +55,7 @@ export const MyBookingCalendar = () => {
       setVisible(false);
     }
   };
+ 
 
   const PickerModal = () => {
     return (
@@ -146,10 +138,8 @@ export const MyBookingCalendar = () => {
         <Calendar
           className=" text-pink-900 font-semibold "
           // view={ month: true, week: false, day: false, agenda: false }
-          components={{
-            event: customEventComponent
-          }}
-          view="agenda"
+        
+          
           localizer={localizer}
           events={bookings}
           startAccessor="start"
