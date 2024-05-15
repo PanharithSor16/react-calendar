@@ -11,20 +11,23 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
+import { DatePicker } from "@hilla/react-components/DatePicker.js";
+import { TextField } from "@hilla/react-components/TextField.js";
 
 const localizer = momentLocalizer(moment);
 
 export const MyBookingCalendar = () => {
   const [visible, setVisible] = useState(false);
   const [selectedTime, setSelectedTime] = useState(new Date());
-  
-  
-  const [bookings, setBookings] = useState([{
-    start: new Date(),
-    end: new Date(),
-    title: `Booking One`,
-    type: "Room A"
-  }]);
+
+  const [bookings, setBookings] = useState([
+    {
+      start: new Date(),
+      end: new Date(),
+      title: `Booking One`,
+      type: "Room A",
+    },
+  ]);
   const [value, onChange] = useState("00:00");
   const handleEventClick = () => {
     // console.log("event clicked!", e);
@@ -55,7 +58,6 @@ export const MyBookingCalendar = () => {
       setVisible(false);
     }
   };
- 
 
   const PickerModal = () => {
     return (
@@ -63,14 +65,14 @@ export const MyBookingCalendar = () => {
         <div className=" flex place-content-around text-center">
           <h2> </h2>
           <div className="">
-          <button
-            className=" flex bg-green-300 p-3 rounded-md"
-            onClick={handleEventSetVisible}
-          >
-            {" "}
-            Cancel
-            <MdCancel className=" m-1 scale-150 text-red-600" />
-          </button>
+            <button
+              className=" flex bg-green-300 p-3 rounded-md"
+              onClick={handleEventSetVisible}
+            >
+              {" "}
+              Cancel
+              <MdCancel className=" m-1 scale-150 text-red-600" />
+            </button>
           </div>
         </div>
         <div className=" grid-cols-3 sm:flex place-content-around  text-center mt-5">
@@ -80,30 +82,44 @@ export const MyBookingCalendar = () => {
               onClick={() => {
                 setHandleClick(time);
               }}
-              className=" space-x-4 bg-red-50"
+              className=" space-x-2 bg-red-50"
             >
               <div> {`${time}:00`}</div>
             </div>
           ))}
 
-          {/* <input type="hours" onClick={() => setHandleClick()} /> */}
-          {/* <MobileTimePicker /> */}
-        </div>
-        <div className=" w-full mt-10">
-          <TimePicker
-            label="Start Meeting"
-            value="07:30"
-            step={60 * 30}
-            autoOpenDisabled
-          />
-        </div>
-        <div className=" w-full mt-5">
-          <TimePicker
-            label="End Meeting"
-            value="04:40"
-            step={60 * 30}
-            autoOpenDisabled
-          />
+          {/* <input type="hours" onClick={() => setHandleClick()} />
+        {/* <MobileTimePicker /> */}
+        </div> 
+        <div className=" grid grid-cols-2">
+          <div>
+            <TextField required label="Meeting title" />
+          </div>
+          <div>
+            <TextField required label="request by" />
+          </div>
+          <div>
+            <DatePicker label="Date of Meeting" autoOpenDisabled />
+          </div>
+          <div className=" w-full ">
+            <TimePicker
+              label="Start Meeting"
+              value="07:30"
+              step={60 * 30}
+              autoOpenDisabled
+            />
+          </div>
+          <div className=" w-full ">
+            <TimePicker
+              label="End Meeting"
+              value="04:40"
+              step={60 * 30}
+              autoOpenDisabled
+            />
+          </div>
+          <div className=" bg-slate-500 h-32">
+            <TextField className=" w-[60%] max-h-max" label="Meeting content" />
+          </div>
         </div>
       </div>
     );
@@ -119,14 +135,12 @@ export const MyBookingCalendar = () => {
         >
           Booking
           <FaRegCalendarAlt className=" m-1 scale-150" />
-
         </button>
         <div className=" ">
           <select name="selectedFruit" className=" bg-red-400 p-3 rounded-md">
             <option value="All">All</option>
             <option value="Room A">Guest Room</option>
             <option value="Room B">Office Meeting Room</option>
-            
           </select>
         </div>
         <button className=" bg-green-400 p-3 rounded-md flex text-center items-center">
@@ -135,21 +149,19 @@ export const MyBookingCalendar = () => {
         </button>
       </div>
       {!visible && (
-        <Calendar
-          className=" text-pink-900 font-semibold "
-          // view={ month: true, week: false, day: false, agenda: false }
-        
-          
-          localizer={localizer}
-          events={bookings}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 550 }}
-          selectable={true}
-          //   onSelectSlot={handleEventClick}
-        />
+          <Calendar
+            className=" text-pink-900 font-semibold "
+            // view={ month: true, week: false, day: false, agenda: false }
+            localizer={localizer}
+            events={bookings}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 550 }}
+            selectable={true}
+            //   onSelectSlot={handleEventClick}
+          />
       )}
       {visible && <PickerModal />}
-    </div>
+    </div>          
   );
 };
